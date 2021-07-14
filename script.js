@@ -1,0 +1,1 @@
+document.getElementsByClassName("button")[0].innerHTML = "fun"
