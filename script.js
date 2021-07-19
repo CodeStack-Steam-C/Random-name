@@ -13,32 +13,71 @@ const changeLoad = (text) => {
     return {name: name, score: 0}
   })
   tempNames = [...names]
-  console.log(names)
 }
 
 const giveName = () => {
   let currentName = {}
+  const random = Math.random()
+  const top30 = Math.floor(tempNames.length * .7)
+  const mid40 = Math.floor(tempNames.length * .3)
+  const highRoll = .25
+  const midRoll = .1
   if (replace && highs === null) {
-    currentName = names[Math.floor(Math.random() * names.length)]
-    console.log(currentName)
+    currentName = tempNames[Math.floor(Math.random() * tempNames.length)]
   }
   else if (!replace && highs === null) {
-    currentName = tempNames.splice(Math.floor(Math.random()*tempNames.length), 1)[0];
+    currentName = tempNames.splice(Math.floor(Math.random() * tempNames.length), 1)[0];
     checkTempName()
   }
   else if (replace && highs) {
-
+    if (random >= highRoll) {
+      currentName = tempNames[Math.floor(Math.random() * (tempNames.length - top30) + top30)]
+    }
+    else if (random >= midRoll) {
+      currentName = tempNames[Math.floor(Math.random() * (top30 - mid40) + mid40)]
+    }
+    else {
+      currentName = tempNames[Math.floor(Math.random() * mid40)]
+    } 
   }
   else if (replace && !highs) {
-
+    if (random >= highRoll) {
+      currentName = tempNames[Math.floor(Math.random() * mid40)]
+    }
+    else if (random >= midRoll) {
+      currentName = tempNames[Math.floor(Math.random() * (top30 - mid40) + mid40)]
+    }
+    else {
+      currentName = tempNames[Math.floor(Math.random() * (tempNames.length - top30) + top30)]
+    }
   }
   else if (!replace && highs) {
-
+    if (random >= highRoll) {
+      currentName = tempNames.splice(Math.floor(Math.random() * (tempNames.length - top30) + top30), 1)[0]
+    }
+    else if (random >= midRoll) {
+      currentName = tempNames.splice(Math.floor(Math.random() * (top30 - mid40) + mid40), 1)[0]
+    }
+    else {
+      currentName = tempNames.splice(Math.floor(Math.random() * mid40), 1)[0]
+    }
+    checkTempName()
   }
   else if (!replace && !highs) {
-
+    if (random >= highRoll) {
+      currentName = tempNames.splice(Math.floor(Math.random() * mid40), 1)[0]
+    }
+    else if (random >= midRoll) {
+      currentName = tempNames.splice(Math.floor(Math.random() * (top30 - mid40) + mid40), 1)[0]
+    }
+    else {
+      currentName = tempNames.splice(Math.floor(Math.random() * (tempNames.length - top30) + top30), 1)[0]
+    }
+    checkTempName()
   }
-
+  console.log("current pick", currentName)
+  console.log(tempNames)
+  console.log("**********************************************")
   nameButton.innerHTML = currentName.name
 }
 
@@ -55,6 +94,8 @@ const pointsDown = () => {
       person.score -= 1
     }
   })
+  names.sort((a, b) => { return a.score - b.score  })
+  tempNames.sort((a, b) => { return a.score - b.score  })
 }
 
 const pointsUp = () => {
@@ -63,10 +104,15 @@ const pointsUp = () => {
       person.score += 1
     }
   })
+  names.sort((a, b) => { return a.score - b.score  })
+  tempNames.sort((a, b) => { return a.score - b.score  })
 }
 
 const handleShuffle = (clicked) => {
-  if (clicked.value === "true") replace = true
+  if (clicked.value === "true") {
+    tempNames = [...names]
+    replace = true
+  }
   else replace = false
 }
 
