@@ -7,10 +7,32 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <div class="button">test</div>
-    <div class="names">
-      <textarea type="text">
+    <h1>Hello World</h1>
+    <div onClick="pointsDown()" class="button">-</div>
+    <div onClick="giveName()" class="button">test</div>
+    <div onClick="pointsUp()" class="button">+</div>
+    
+    <div id="settings">
+      <textarea onchange="changeLoad(this)" type="text"></textarea>
+      <div id="radios">
+        <p>Please select shuffle type</p>
+        <input onClick="handleShuffle(this)" type="radio" name="shuffle" value="true">
+        <label>Replace</label><br>
+        <input onClick="handleShuffle(this)" type="radio" name="shuffle" value="false" checked>
+        <label>No Replace</label><br>
+
+        <br>  
+
+        <p>Please select pick type</p>
+        <input onClick="handlePick(this)" type="radio" name="pick" value="null" checked>
+        <label>None</label><br>
+        <input onClick="handlePick(this)" type="radio" name="pick" value="true">
+        <label>Highs</label><br>
+        <input onClick="handlePick(this)" type="radio" name="pick" value="false">
+        <label>Lows</label><br>
+      </div>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>
